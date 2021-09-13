@@ -7,6 +7,7 @@ class StackArray : public CircularArray<T> {
         StackArray (int _capacity);
         void push(T data);
         T pop();
+        T& top();
         void display();
 };
 
@@ -29,6 +30,11 @@ T StackArray<T>::pop() {
 template<typename T>
 void StackArray<T>::display() {
     cout << this->to_string()<<endl;
+}
+
+template<typename T>
+T& StackArray<T>::top() {
+    return (*this)[this->size() - 1];
 }
 
 

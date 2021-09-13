@@ -8,6 +8,8 @@ class QueueArray : public CircularArray<T> {
         void enqueue(T data);
         T dequeue();
         void display();
+        T& front();
+        T& back();
 };
 
 template<typename T>
@@ -29,4 +31,14 @@ T QueueArray<T>::dequeue() {
 template<typename T>
 void QueueArray<T>::display() {
     cout << this->to_string()<<endl;
+}
+
+template<typename T>
+T &QueueArray<T>::front() {
+    return (*this)[0];
+}
+
+template<typename T>
+T &QueueArray<T>::back() {
+    return (*this)[this->size() - 1];
 }
