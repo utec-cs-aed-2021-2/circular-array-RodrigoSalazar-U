@@ -1,8 +1,7 @@
 #include <iostream>
-//#include "circulararray.h"
+#include "circulararray.h"
 #include "tester.h"
-//#include "queue.h"
-#include "stack.h"
+
 using namespace std;
 
 int main() {
@@ -27,30 +26,7 @@ int main() {
     array->sort();
     ASSERT(array->to_string() == "2 3 4 7 8 10 15 ", "The function sort is not working");
     array->reverse();
-    ASSERT(array->to_string() == "15 10 8 7 4 3 2 ", "The function reverse is not working");   
+    ASSERT(array->to_string() == "15 10 8 7 4 3 2 ", "The function reverse is not working");
     delete array;
-
-    /*
-    StackArray<int>* s = new StackArray<int>(7);
-    s->push(3);
-    s->push(5);
-    s->push(10);
-    s->push(12);
-    s->display();
-    cout << s->pop()<<endl;
-    cout << s->pop()<<endl;
-    s->display();
-    */
-     /*
-    QueueArray<int>* q = new QueueArray<int>(7);
-    q->enqueue(3);
-    q->enqueue(5);
-    q->enqueue(10);
-    q->enqueue(12);
-    q->display();
-    cout << q->dequeue()<<endl;
-    cout << q->dequeue()<<endl;
-    q->display();
-     */
     return 0;
 }
