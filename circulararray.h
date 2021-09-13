@@ -40,6 +40,10 @@ public:
 private:
     int next(int);
     int prev(int);
+
+    void mergesort(const int begin, const int end);
+
+    void merge(const int left, int mid, const int right);
 };
 
 template <class T>
@@ -167,7 +171,63 @@ T &CircularArray<T>::operator[](int pos) {
 }
 
 template<class T>
+void CircularArray<T>::mergesort(int const begin, int const end) {
+    // Caso base
+    if (begin >= end) return;
+    // Llamadas recursivas
+    auto mid = begin + (end-begin)/2;
+    mergesort(begin, mid);
+    mergesort(mid+1, end);
+    // Merge de particiones ordenadas
+    merge(begin, mid, end);
+}
+
+template<class T>
+void CircularArray<T>::merge(const int left, int mid, const int right) {
+    auto const sub_arr_1 = mid-left+1;
+    auto const sub_arr_2 = right-mid;
+
+    // Copia de arreglos
+    auto *left_arr = new T[sub_arr_1];
+    auto *right_arr = new T[sub_arr_2];
+    for (int i = 0; i < sub_arr_1; ++i) {
+        left_arr[i] = (*this)[left+i];
+    }
+    for (int j = 0; j < sub_arr_2; ++j) {
+        right_arr[j] = (*this)[mid+1+j];
+    }
+
+    // Merge
+    auto index_left = 0, index_right = 0, index_merge = left;
+    while (index_left < sub_arr_1 && index_right < sub_arr_2){
+        if (left_arr[index_left] <= right_arr[index_right]){
+            (*this)[index_merge++] = left_arr[index_left++];
+        }
+        else {
+            (*this)[index_merge++] = right_arr[index_right++];
+        }
+    }
+
+    // Copia de elementos restantes
+    while (index_left < sub_arr_1) {
+        (*this)[index_merge++] = left_arr[index_left++];
+    }
+    while (index_right < sub_arr_2) {
+        (*this)[index_merge++] = right_arr[index_right++];
+    }
+}
+
+
+
+
+template<class T>
 void CircularArray<T>::sort() {
+    // Merge sort
+    if (! is_empty()){
+        mergesort(0, size()-1);
+    }
+    /*
+    // Bubble sort
     for (int i = 0; i < size()-1; ++i) {
         for (int j = 0; j < size()-i-1; ++j) {
             if ((*this)[j] > (*this)[j+1]) {
@@ -175,7 +235,9 @@ void CircularArray<T>::sort() {
             }
         }
     }
+    */
 }
+
 
 template<class T>
 bool CircularArray<T>::is_sorted() {
@@ -209,6 +271,7 @@ void CircularArray<T>::insert(T data, int pos) {
         (*this)[pos] = data;
     }
 }
+
 
 
 
